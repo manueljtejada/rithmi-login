@@ -1,5 +1,6 @@
 package com.example.rithmilogin;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        updateUI(currentUser);
     }
 
-    private void signIn(String email, String password) {
+    private void signIn(String email, String password, View view) {
         if (!validateForm()) {
             return;
         }
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Log.d(TAG, "Successfully signed in user" + user);
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(MainActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "Error signing in");
@@ -100,6 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        signIn(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
+        signIn(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), v);
     }
 }
