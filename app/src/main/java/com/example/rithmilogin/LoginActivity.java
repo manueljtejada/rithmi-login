@@ -2,6 +2,7 @@ package com.example.rithmilogin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Autenticando...");
+        progressDialog.setMessage(getBaseContext().getString(R.string.auth_loading_text));
         progressDialog.show();
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -80,18 +81,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = mEmailInput.getText().toString();
         String password = mPasswordInput.getText().toString();
 
+        Drawable errorIcon = getResources().getDrawable(R.drawable.ic_error_icon);
+        errorIcon.setBounds(0, 0, errorIcon.getIntrinsicWidth(), errorIcon.getIntrinsicHeight());
+
         if (TextUtils.isEmpty(email)) {
-            mEmailInput.setError(getBaseContext().getString(R.string.error_empty_field));
+            mEmailInput.setError(getBaseContext().getString(R.string.error_empty_field), errorIcon);
             valid = false;
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailInput.setError(getBaseContext().getString(R.string.error_invalid_email));
+            mEmailInput.setError(getBaseContext().getString(R.string.error_invalid_email), errorIcon);
             valid = false;
         } else {
             mEmailInput.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
-            mPasswordInput.setError(getBaseContext().getString(R.string.error_empty_field));
+            mPasswordInput.setError(getBaseContext().getString(R.string.error_empty_field), errorIcon);
             valid = false;
         } else {
             mPasswordInput.setError(null);
