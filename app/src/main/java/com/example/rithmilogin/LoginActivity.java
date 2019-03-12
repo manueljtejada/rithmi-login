@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "Sign In";
 
@@ -31,28 +31,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        // Initialize FirebaseAuth
+        /* Initialize FirebaseAuth */
         mAuth = FirebaseAuth.getInstance();
 
         /* Views */
         mEmailInput = findViewById(R.id.emailInput);
         mPasswordInput = findViewById(R.id.passwordInput);
 
-        // Buttons
+        /* Buttons */
         findViewById(R.id.emailSignInButton).setOnClickListener(this);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
-    }
-
-    private void signIn(String email, String password, View view) {
+    private void signIn(String email, String password) {
         if (!validateForm()) {
             return;
         }
@@ -64,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Log.d(TAG, "Successfully signed in user" + user);
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(MainActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "Error signing in");
                     }
                 }
@@ -103,6 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        signIn(mEmailInput.getText().toString(), mPasswordInput.getText().toString(), v);
+        signIn(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
     }
 }
