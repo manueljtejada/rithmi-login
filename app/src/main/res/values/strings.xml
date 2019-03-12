@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Rithmi Login</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="login_button_text">Iniciar Sesión</string>
+    <string name="error_empty_field">Debe completar este campo</string>
+    <string name="error_invalid_email">Debe introducir un email válido</string>
+    <string name="error_authentication">El usuario o contraseña son incorrectos.</string>
+    <string name="signup_text">¿No tienes cuenta? Crea una aquí</string>
+    <string name="logout_button_text">Cerrar Sesión</string>
+    <string name="welcome_text">¡Bienvenido!</string>
 </resources>

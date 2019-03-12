@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         startActivity(intent);
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "El usuario o contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.error_authentication, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "Error signing in");
                     }
                 }
@@ -81,17 +81,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = mPasswordInput.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            mEmailInput.setError("Debe completar este campo");
+            mEmailInput.setError(getBaseContext().getString(R.string.error_empty_field));
             valid = false;
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailInput.setError("Debe introducir un email válido");
+            mEmailInput.setError(getBaseContext().getString(R.string.error_invalid_email));
             valid = false;
         } else {
             mEmailInput.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
-            mPasswordInput.setError("Debe completar este campo");
+            mEmailInput.setError(getBaseContext().getString(R.string.error_empty_field));
             valid = false;
         } else {
             mPasswordInput.setError(null);
