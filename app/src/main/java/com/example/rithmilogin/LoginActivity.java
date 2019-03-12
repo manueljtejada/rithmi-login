@@ -1,5 +1,6 @@
 package com.example.rithmilogin;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -44,10 +45,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.emailSignInButton).setOnClickListener(this);
     }
 
-    private void signIn(String email, String password) {
+    private void login(String email, String password) {
         if (!validateForm()) {
             return;
         }
+
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Autenticando...");
+        progressDialog.show();
 
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -56,10 +62,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Log.d(TAG, "Successfully signed in user" + user);
+                        progressDialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(LoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "El usuario o contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "Error signing in");
                     }
                 }
@@ -95,6 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        signIn(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
+        login(mEmailInput.getText().toString(), mPasswordInput.getText().toString());
     }
 }
