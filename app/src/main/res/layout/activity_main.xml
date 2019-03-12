@@ -27,7 +27,6 @@
             android:layout_marginBottom="8dp"
             app:hintTextAppearance="@style/HintText">
             <EditText
-                android:theme="@style/LoginInput"
                 android:id="@+id/emailInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +41,6 @@
             android:layout_marginBottom="8dp"
             app:hintTextAppearance="@style/HintText">
             <EditText
-                android:theme="@style/LoginInput"
                 android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
