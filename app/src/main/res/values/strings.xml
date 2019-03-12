@@ -9,4 +9,5 @@
     <string name="signup_text">¿No tienes cuenta? Crea una aquí</string>
     <string name="logout_button_text">Cerrar Sesión</string>
     <string name="welcome_text">¡Bienvenido!</string>
+    <string name="auth_loading_text">Autenticando…</string>
 </resources>
