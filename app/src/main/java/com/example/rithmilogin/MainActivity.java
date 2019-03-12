@@ -1,10 +1,9 @@
 package com.example.rithmilogin;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -53,19 +52,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void signIn(String email, String password) {
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Log.d(TAG, "Successfully signed in user" + user);
-                            } else {
-                                Toast.makeText(MainActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "Error signing in");
-                            }
-                        }
-                    });
+        if (!validateForm()) {
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Log.d(TAG, "Successfully signed in user" + user);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Error signing in");
+                    }
+                }
+            });
+    }
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String email = mEmailInput.getText().toString();
+        String password = mPasswordInput.getText().toString();
+
+        if (TextUtils.isEmpty(email)) {
+            mEmailInput.setError("Debe completar este campo");
+            valid = false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailInput.setError("Debe introducir un email válido");
+            valid = false;
+        } else {
+            mEmailInput.setError(null);
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            mPasswordInput.setError("Debe completar este campo");
+            valid = false;
+        } else {
+            mPasswordInput.setError(null);
+        }
+
+        return valid;
+
     }
 
     @Override
