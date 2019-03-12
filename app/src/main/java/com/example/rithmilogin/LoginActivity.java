@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (TextUtils.isEmpty(password)) {
-            mEmailInput.setError(getBaseContext().getString(R.string.error_empty_field));
+            mPasswordInput.setError(getBaseContext().getString(R.string.error_empty_field));
             valid = false;
         } else {
             mPasswordInput.setError(null);
